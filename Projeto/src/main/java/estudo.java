@@ -20,7 +20,7 @@ public class estudo extends JFrame {
     public static void main(String[] args)
    {
        JFrame f = new ExemploUI();
-       f.setTitle("Primeira Janela");
+       f.setTitle("Pri");
        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        f.setBounds(300, 300, 400, 400);
        f.setVisible(true);

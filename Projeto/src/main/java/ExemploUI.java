@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 public class ExemploUI extends JFrame{
 
-    JLabel      lblCodigo, lblNome; //curso
+    JLabel      lblCodigo, lblNome; //criação de variáveis
     JLabel      lblNumeroClientes;
     JTextField  txtCodigo, txtNome; //
     JButton     btnSalvar, btnCancelar;
@@ -31,7 +31,7 @@ public class ExemploUI extends JFrame{
     DefaultListModel mdlListaClientes;
 
     //Cliente c;
-    ArrayList<Cliente> lstClientes = new ArrayList<Cliente>();
+    ArrayList<Cliente> lstClientes = new ArrayList<Cliente>(); //array
 
     ExemploUI()
     {
