@@ -2,9 +2,13 @@ import java.awt.*;
 
 import static java.awt.Component.LEFT_ALIGNMENT;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,55 +32,49 @@ public class estudo extends JFrame{
     JList jlistodos;
     DefaultListModel lientes;
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
-    public void NovoCurso()
-    {
-        try
-        {
-            String titulo, instrutor, InDat, outDat;
-            int iniciodat, fimdat;
-            InDat = txtiniciodat.getText();
-            outDat = txtfimdat.getText();
-            titulo = txttitulo.getText();
-            instrutor   = txtintrutor.getText();
-            if (titulo.isEmpty() || instrutor.isEmpty() || InDat.isEmpty() || outDat.isEmpty())
-            {
+    public void NovoCurso() {
+        try {
+            String titulo = txttitulo.getText();
+            String instrutor = txtintrutor.getText();
+            String InDat = txtiniciodat.getText();
+            String outDat = txtfimdat.getText();
+
+            if (titulo.isEmpty() || instrutor.isEmpty() || InDat.isEmpty() || outDat.isEmpty()) {
                 throw new IllegalArgumentException("Digite todos os campos!");
             }
-            iniciodat = Integer.parseInt(InDat);
-            fimdat = Integer.parseInt(outDat);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate iniciodat = LocalDate.parse(InDat, formatter);
+            LocalDate fimdat = LocalDate.parse(outDat, formatter);
+
             Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
             ltscursos.add(csos);
 
-            JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
-                    csos.titulo);
-        }
-        catch (NumberFormatException e)
-        {
-            JOptionPane.showMessageDialog(rootPane, "Data invalida: use em pontuação");
-        }
-        catch (IllegalArgumentException e)
-        {
+            JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " + csos.titulo);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(rootPane, "Data inválida: use o formato dd-MM-yyyy");
+        } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
-        txttitulo.setText(" ");
-        txtiniciodat.setText(" ");
-        txtintrutor.setText(" ");
-        txtfimdat.setText(" ");
 
+        txttitulo.setText("");
+        txtintrutor.setText("");
+        txtiniciodat.setText("");
+        txtfimdat.setText("");
 
-        
         AtualizarLista();
-
     }
+
     public void AtualizarLista()
     {
         int i;
         lientes.clear();
-        for(Cursos aux : ltscursos)
-        {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for(Cursos aux : ltscursos){
             // DefaultListModel atribuído ao JList
-            lientes.addElement("Titulo: " + aux.getTitulo() +", " + "Instrutor: " + aux.getIntrutor() + ", " + "Data de início: "+ aux.getDatin() + ", " + "Data de término: " + aux.getDatfim());
-
+            String datinFormatada = aux.getDatin().format(formatter);
+            String datfimFormatada = aux.getDatfim().format(formatter);
+            lientes.addElement("Titulo: " + aux.getTitulo() +", " + "Instrutor: " + aux.getIntrutor() + ", " + "Data de início: "+ datinFormatada + ", " + "Data de término: " + datfimFormatada);
         }
     }
 
@@ -160,26 +158,23 @@ public class estudo extends JFrame{
         a.setResizable(false);
 
     }
-    public class Cursos
-    {
-
+    public class Cursos {
         private String titulo, intrutor;
-        private int datin, datfim;
+        private LocalDate datin, datfim;
 
-        Cursos(String ti, String in, int dain, int daout)
-        {
+        Cursos(String ti, String in, LocalDate dain, LocalDate daout) {
             this.titulo = ti;
             this.intrutor = in;
             this.datfim = daout;
             this.datin = dain;
-
         }
 
-        public int getDatfim() {
+
+        public LocalDate getDatfim() {
             return datfim;
         }
 
-        public int getDatin() {
+        public LocalDate getDatin() {
             return datin;
         }
 
@@ -191,11 +186,11 @@ public class estudo extends JFrame{
             return titulo;
         }
 
-        public void setDatfim(int datfim) {
+        public void setDatfim(LocalDate datfim) {
             this.datfim = datfim;
         }
 
-        public void setDatin(int datin) {
+        public void setDatin(LocalDate datin) {
             this.datin = datin;
         }
 
