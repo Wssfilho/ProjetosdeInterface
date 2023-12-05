@@ -5,6 +5,10 @@ import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.RootPaneUI;
 
-public class estudo extends JFrame{
+public class estudo extends JFrame {
     JButton btnSalvar, btnCancelar;
     JLabel lbltitulo, lblinstrutor;
     JLabel lbliniciodat, lblfimdat, lblListaCursos;
@@ -28,60 +32,53 @@ public class estudo extends JFrame{
     JList jlistodos;
     DefaultListModel lientes;
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
-    public void NovoCurso()
-    {
-        try
-        {
-            String titulo, instrutor, InDat, outDat;
-            int iniciodat, fimdat;
-            InDat = txtiniciodat.getText();
-            outDat = txtfimdat.getText();
-            titulo = txttitulo.getText();
-            instrutor   = txtintrutor.getText();
-            if (titulo.isEmpty() || instrutor.isEmpty() || InDat.isEmpty() || outDat.isEmpty())
-            {
+
+    public void NovoCurso() {
+        try {
+            String titulo = txttitulo.getText();
+            String instrutor = txtintrutor.getText();
+
+            // Parse as datas de início e fim
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate iniciodat = LocalDate.parse(txtiniciodat.getText(), formatter);
+            LocalDate fimdat = LocalDate.parse(txtfimdat.getText(), formatter);
+
+            if (titulo.isEmpty() || instrutor.isEmpty()) {
                 throw new IllegalArgumentException("Digite todos os campos!");
             }
-            iniciodat = Integer.parseInt(InDat);
-            fimdat = Integer.parseInt(outDat);
+
             Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
             ltscursos.add(csos);
 
-            JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
-                    csos.titulo);
-        }
-        catch (NumberFormatException e)
-        {
-            JOptionPane.showMessageDialog(rootPane, "Data invalida: use em pontuação");
-        }
-        catch (IllegalArgumentException e)
-        {
+            JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " + csos.titulo);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(rootPane, "Data inválida: use o formato dd/MM/yyyy");
+        } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
-        txttitulo.setText(" ");
-        txtiniciodat.setText(" ");
-        txtintrutor.setText(" ");
-        txtfimdat.setText(" ");
 
+        txttitulo.setText("");
+        txtintrutor.setText("");
+        txtiniciodat.setText("");
+        txtfimdat.setText("");
 
-        
         AtualizarLista();
-
     }
-    public void AtualizarLista()
-    {
+
+    public void AtualizarLista() {
         int i;
         lientes.clear();
-        for(Cursos aux : ltscursos)
-        {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Cursos aux : ltscursos) {
             // DefaultListModel atribuído ao JList
-            lientes.addElement("Titulo: " + aux.getTitulo() +", " + "Instrutor: " + aux.getIntrutor() + ", " + "Data de início: "+ aux.getDatin() + ", " + "Data de término: " + aux.getDatfim());
+            String datinFormatada = aux.getDatin().format(formatter);
+            String datfimFormatada = aux.getDatfim().format(formatter);
+            lientes.addElement("Titulo: " + aux.getTitulo() + ", " + "Instrutor: " + aux.getIntrutor() + ", " + "Data de início: " + datinFormatada + ", " + "Data de término: " + datfimFormatada);
 
         }
     }
 
-    estudo()
-    {
+    estudo() {
         lblListaCursos = new JLabel("Lista de cursos");
         lbltitulo = new JLabel("Titulo");
         txttitulo = new JTextField();
@@ -93,7 +90,7 @@ public class estudo extends JFrame{
         txtfimdat = new JTextField();
         lientes = new DefaultListModel();
         jlistodos = new JList(lientes);
-        btnSalvar   = new JButton("Salvar");
+        btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
         JPanel formulario = new JPanel();
         formulario.setBackground(Color.LIGHT_GRAY);
@@ -116,9 +113,9 @@ public class estudo extends JFrame{
 
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
         listPane.add(lblListaCursos);
-        listPane.add(Box.createRigidArea(new Dimension(2,5)));
+        listPane.add(Box.createRigidArea(new Dimension(2, 5)));
         listPane.add(listScroller);
-        listPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         Container contentPane = getContentPane();
         contentPane.add(formulario, BorderLayout.NORTH);
         contentPane.add(listPane, BorderLayout.CENTER);
@@ -127,20 +124,16 @@ public class estudo extends JFrame{
         btnSalvar.addActionListener(handler);
         btnCancelar.addActionListener(handler);
     }
-    private class EventoHandler implements ActionListener
-    {
+
+    private class EventoHandler implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent event)
-        {
+        public void actionPerformed(ActionEvent event) {
             String string = "";
 
-            if (event.getSource() == btnSalvar)
-            {
+            if (event.getSource() == btnSalvar) {
                 NovoCurso();
 
-            }
-            else if (event.getSource() == btnCancelar)
-            {
+            } else if (event.getSource() == btnCancelar) {
                 JOptionPane.showMessageDialog(null, "Operação cancelada.");
                 a.dispose();
 
@@ -149,9 +142,10 @@ public class estudo extends JFrame{
 
         }
     }
+
     public static JFrame a;
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         a = new estudo();
         a.setTitle("Cadastro de cursos");
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,26 +154,23 @@ public class estudo extends JFrame{
         a.setResizable(false);
 
     }
-    public class Cursos
-    {
 
+    public class Cursos {
         private String titulo, intrutor;
-        private int datin, datfim;
+        private LocalDate datin, datfim;
 
-        Cursos(String ti, String in, int dain, int daout)
-        {
+        Cursos(String ti, String in, LocalDate dain, LocalDate daout) {
             this.titulo = ti;
             this.intrutor = in;
             this.datfim = daout;
             this.datin = dain;
-
         }
 
-        public int getDatfim() {
+        public LocalDate getDatfim() {
             return datfim;
         }
 
-        public int getDatin() {
+        public LocalDate getDatin() {
             return datin;
         }
 
@@ -191,11 +182,11 @@ public class estudo extends JFrame{
             return titulo;
         }
 
-        public void setDatfim(int datfim) {
+        public void setDatfim(LocalDate datfim) {
             this.datfim = datfim;
         }
 
-        public void setDatin(int datin) {
+        public void setDatin(LocalDate datin) {
             this.datin = datin;
         }
 
@@ -207,6 +198,5 @@ public class estudo extends JFrame{
             this.titulo = titulo;
         }
     }
-
 }
 
