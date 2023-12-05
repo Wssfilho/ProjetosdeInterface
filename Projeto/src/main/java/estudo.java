@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,10 +28,10 @@ import javax.swing.plaf.RootPaneUI;
 public class estudo extends JFrame {
     JButton btnSalvar, btnCancelar;
     JLabel lbltitulo, lblinstrutor;
-    JLabel lbliniciodat, lblfimdat, lblListaCursos;
+    JLabel lbliniciodat, lblfimdat, lblListaCursos, lblListaBusca;
     JTextField txttitulo, txtintrutor, txtiniciodat, txtfimdat;
-    JList jlistodos;
-    DefaultListModel lientes;
+    JList jlistodos, jListbusca;
+    DefaultListModel lientes, lbusca;
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
 
     public void NovoCurso() {
@@ -85,6 +86,7 @@ public class estudo extends JFrame {
     estudo() {
         lblListaCursos = new JLabel("Lista de cursos");
         lbltitulo = new JLabel("Titulo do Curso");
+        lblListaBusca = new JLabel("Lista de Busca");
         txttitulo = new JTextField();
         lblinstrutor = new JLabel("Instrutor");
         txtintrutor = new JTextField();
@@ -94,6 +96,9 @@ public class estudo extends JFrame {
         txtfimdat = new JTextField();
         lientes = new DefaultListModel();
         jlistodos = new JList(lientes);
+        lbusca = new DefaultListModel();
+        jListbusca = new JList(lbusca);
+
         btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
         JPanel formulario = new JPanel();
@@ -113,6 +118,9 @@ public class estudo extends JFrame {
         JScrollPane listScroller = new JScrollPane(jlistodos);
         listScroller.setPreferredSize(new Dimension(300, 80));
         listScroller.setAlignmentX(LEFT_ALIGNMENT);
+        JScrollPane listScrollerBusca = new JScrollPane(jListbusca);
+        listScrollerBusca.setPreferredSize(new Dimension(300, 80));
+        listScrollerBusca.setAlignmentX(LEFT_ALIGNMENT);
         JPanel listPane = new JPanel();
 
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
@@ -120,9 +128,18 @@ public class estudo extends JFrame {
         listPane.add(Box.createRigidArea(new Dimension(2, 5)));
         listPane.add(listScroller);
         listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel ListBusca = new JPanel();
+        ListBusca.setLayout(new BoxLayout(ListBusca, BoxLayout.PAGE_AXIS));
+        ListBusca.add(lblListaBusca);
+        ListBusca.add(Box.createRigidArea(new Dimension(2, 5)));
+        ListBusca.add(listScrollerBusca);
+        ListBusca.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         Container contentPane = getContentPane();
         contentPane.add(formulario, BorderLayout.NORTH);
-        contentPane.add(listPane, BorderLayout.CENTER);
+        contentPane.add(listPane, BorderLayout.WEST);
+        contentPane.add(ListBusca, BorderLayout.EAST);
 
         EventoHandler handler = new EventoHandler();
         btnSalvar.addActionListener(handler);
