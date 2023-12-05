@@ -122,7 +122,7 @@ public class estudo extends JFrame {
         listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         Container contentPane = getContentPane();
         contentPane.add(formulario, BorderLayout.NORTH);
-        contentPane.add(listPane, BorderLayout.CENTER);
+        contentPane.add(listPane, BorderLayout.WEST);
 
         EventoHandler handler = new EventoHandler();
         btnSalvar.addActionListener(handler);
