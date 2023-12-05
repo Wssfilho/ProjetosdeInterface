@@ -48,6 +48,11 @@ public class estudo extends JFrame {
                 throw new IllegalArgumentException("Digite todos os campos!");
             }
 
+            LocalDate dataAtual = LocalDate.now();
+            if (iniciodat.isBefore(dataAtual)) {
+                throw new IllegalArgumentException("A data de início do curso não pode ser anterior a data de hoje.!");
+            }
+
             if(fimdat.isBefore(iniciodat)){
                 throw new IllegalArgumentException("A data de fim do curso não pode ser anterior à data de início!");
             }
