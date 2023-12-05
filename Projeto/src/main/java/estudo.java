@@ -4,6 +4,7 @@ import static java.awt.Component.LEFT_ALIGNMENT;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.plaf.RootPaneUI;
 
 public class estudo extends JFrame{
     JButton btnSalvar, btnCancelar;
@@ -28,20 +30,40 @@ public class estudo extends JFrame{
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
     public void NovoCurso()
     {
-        String titulo, instrutor, InDat, outDat;
-        int iniciodat, fimdat;
-        InDat = txtiniciodat.getText();
-        outDat = txtfimdat.getText();
-        titulo = txttitulo.getText();
-        instrutor   = txtintrutor.getText();
-        iniciodat = Integer.parseInt(InDat);
-        fimdat = Integer.parseInt(outDat);
+        try
+        {
+            String titulo, instrutor, InDat, outDat;
+            int iniciodat, fimdat;
+            InDat = txtiniciodat.getText();
+            outDat = txtfimdat.getText();
+            titulo = txttitulo.getText();
+            instrutor   = txtintrutor.getText();
+            if (titulo.isEmpty() || instrutor.isEmpty() || InDat.isEmpty() || outDat.isEmpty())
+            {
+                throw new IllegalArgumentException("Digite todos os campos!");
+            }
+            iniciodat = Integer.parseInt(InDat);
+            fimdat = Integer.parseInt(outDat);
+            Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
+            ltscursos.add(csos);
 
-        Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
-        ltscursos.add(csos);
+            JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
+                    csos.titulo);
+        }
+        catch (NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(rootPane, "Data invalida: use em pontuação");
+        }
+        catch (IllegalArgumentException e)
+        {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+        txttitulo.setText(" ");
+        txtiniciodat.setText(" ");
+        txtintrutor.setText(" ");
+        txtfimdat.setText(" ");
 
-        JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
-                csos.titulo);
+
         
         AtualizarLista();
 
@@ -53,7 +75,7 @@ public class estudo extends JFrame{
         for(Cursos aux : ltscursos)
         {
             // DefaultListModel atribuído ao JList
-            lientes.addElement("titulo: " + aux.getTitulo() +" , " + "Instrutor: " + aux.getIntrutor());
+            lientes.addElement("Titulo: " + aux.getTitulo() +", " + "Instrutor: " + aux.getIntrutor() + ", " + "Data de início: "+ aux.getDatin() + ", " + "Data de término: " + aux.getDatfim());
 
         }
     }
@@ -61,7 +83,7 @@ public class estudo extends JFrame{
     estudo()
     {
         lblListaCursos = new JLabel("Lista de cursos");
-        lbltitulo = new JLabel("titular");
+        lbltitulo = new JLabel("Titulo");
         txttitulo = new JTextField();
         lblinstrutor = new JLabel("Instrutor");
         txtintrutor = new JTextField();
@@ -73,7 +95,6 @@ public class estudo extends JFrame{
         jlistodos = new JList(lientes);
         btnSalvar   = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
-
         JPanel formulario = new JPanel();
         formulario.setBackground(Color.LIGHT_GRAY);
         formulario.setLayout(new GridLayout(5, 2));
@@ -121,17 +142,23 @@ public class estudo extends JFrame{
             else if (event.getSource() == btnCancelar)
             {
                 JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                a.dispose();
+
+
             }
 
         }
     }
+    public static JFrame a;
     public static void main(String[] args)
     {
-        JFrame a = new estudo();
+        a = new estudo();
         a.setTitle("Cadastro de cursos");
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        a.setBounds(300, 300, 400, 400);
+        a.setBounds(300, 300, 870, 400);
         a.setVisible(true);
+        a.setResizable(false);
+
     }
     public class Cursos
     {
