@@ -38,9 +38,7 @@ public class estudo extends JFrame{
         JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
                 csos.titulo);
 
-        lblNumeroClientes.setText(" Total clientes : "+lstClientes.size());
 
-        AtualizarLista();
     }
     estudo()
     {
@@ -72,7 +70,7 @@ public class estudo extends JFrame{
         listScroller.setPreferredSize(new Dimension(250, 80));
         listScroller.setAlignmentX(LEFT_ALIGNMENT);
         JPanel listPane = new JPanel();
-        listPane.setBackground(Color.black);
+
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
         listPane.add(lblListaCursos);
         listPane.add(Box.createRigidArea(new Dimension(0,5)));
@@ -85,18 +83,14 @@ public class estudo extends JFrame{
     public static void main(String[] args)
     {
         JFrame a = new estudo();
-        a.setTitle("Primeira Janela");
+        a.setTitle("Cadastro de cursos");
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         a.setBounds(300, 300, 400, 400);
         a.setVisible(true);
     }
     public class Cursos
     {
-        /*JLabel lbltitulo, lblinstrutor;
-        JLabel lbliniciodat, lblfimdat, lblListaCursos;
-        JTextField txttitulo, txtintrutor, txtiniciodat, txtfimdat;
 
-         */
         private String titulo, intrutor;
         private int datin, datfim;
 
