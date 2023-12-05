@@ -47,6 +47,10 @@ public class estudo extends JFrame {
                 throw new IllegalArgumentException("Digite todos os campos!");
             }
 
+            if(fimdat.isBefore(iniciodat)){
+                throw new IllegalArgumentException("A data de fim do curso não pode ser anterior à data de início!");
+            }
+
             Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
             ltscursos.add(csos);
 
