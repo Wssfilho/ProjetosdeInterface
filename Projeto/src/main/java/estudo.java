@@ -33,7 +33,7 @@ public class estudo extends JFrame{
         fimdat = Integer.parseInt(outDat);
 
         Cursos csos = new Cursos(titulo, instrutor, iniciodat, fimdat);
-        jlistodos.add(csos);
+        ltscursos.add(csos);
 
         JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " +
                 csos.titulo);
