@@ -56,7 +56,7 @@ public class estudo extends JFrame {
 
             JOptionPane.showMessageDialog(rootPane, "Novo curso criado: " + csos.titulo);
         } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(rootPane, "Data inválida: use o formato dd/MM/yyyy");
+            JOptionPane.showMessageDialog(rootPane, "Data inválida!");
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
@@ -84,13 +84,13 @@ public class estudo extends JFrame {
 
     estudo() {
         lblListaCursos = new JLabel("Lista de cursos");
-        lbltitulo = new JLabel("Titulo");
+        lbltitulo = new JLabel("Titulo do Curso");
         txttitulo = new JTextField();
         lblinstrutor = new JLabel("Instrutor");
         txtintrutor = new JTextField();
-        lbliniciodat = new JLabel("Data de inicio");
+        lbliniciodat = new JLabel("Data de inicio (dd/mm/yyyy)");
         txtiniciodat = new JTextField();
-        lblfimdat = new JLabel("Data de fim");
+        lblfimdat = new JLabel("Data de fim (dd/mm/yyyy)");
         txtfimdat = new JTextField();
         lientes = new DefaultListModel();
         jlistodos = new JList(lientes);
