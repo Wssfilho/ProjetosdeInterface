@@ -35,13 +35,13 @@ public class estudo extends JFrame {
 
     public void NovoCurso() {
         try {
-            String titulo = txttitulo.getText();
-            String instrutor = txtintrutor.getText();
+            String titulo = txttitulo.getText().trim();
+            String instrutor = txtintrutor.getText().trim();
 
             // Parse as datas de início e fim
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate iniciodat = LocalDate.parse(txtiniciodat.getText(), formatter);
-            LocalDate fimdat = LocalDate.parse(txtfimdat.getText(), formatter);
+            LocalDate iniciodat = LocalDate.parse(txtiniciodat.getText().trim(), formatter);
+            LocalDate fimdat = LocalDate.parse(txtfimdat.getText().trim(), formatter);
 
             if (titulo.isEmpty() || instrutor.isEmpty()) {
                 throw new IllegalArgumentException("Digite todos os campos!");
