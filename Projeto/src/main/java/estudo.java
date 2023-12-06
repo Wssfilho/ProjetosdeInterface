@@ -26,13 +26,28 @@ import javax.swing.JTextField;
 import javax.swing.plaf.RootPaneUI;
 
 public class estudo extends JFrame {
-    JButton btnSalvar, btnCancelar;
-    JLabel lbltitulo, lblinstrutor;
+    JButton btnSalvar, btnCancelar,btnBuscar;
+    JLabel lbltitulo, lblinstrutor, lblBuscar;
     JLabel lbliniciodat, lblfimdat, lblListaCursos, lblListaBusca;
-    JTextField txttitulo, txtintrutor, txtiniciodat, txtfimdat;
+    JTextField txttitulo, txtintrutor, txtiniciodat, txtfimdat,txtBusca;
     JList jlistodos, jListbusca;
     DefaultListModel lientes, lbusca;
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
+
+    public void ConsultarCursoPorNome(String nome) {
+        lbusca.clear();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Cursos curso : ltscursos) {
+            if (curso.getTitulo().equalsIgnoreCase(nome)) {
+                String datinFormatada = curso.getDatin().format(formatter);
+                String datfimFormatada = curso.getDatfim().format(formatter);
+                lbusca.addElement("Titulo: " + curso.getTitulo() + ", " +
+                        "Instrutor: " + curso.getIntrutor() + ", " +
+                        "Data de início: " + datinFormatada + ", " +
+                        "Data de término: " + datfimFormatada);
+            }
+        }
+    }
 
     public void NovoCurso() {
         try {
@@ -94,16 +109,19 @@ public class estudo extends JFrame {
         txtiniciodat = new JTextField();
         lblfimdat = new JLabel("Data de fim (dd/mm/yyyy)");
         txtfimdat = new JTextField();
+        lblBuscar = new JLabel("Buscar curso");
+        txtBusca = new JTextField();
         lientes = new DefaultListModel();
         jlistodos = new JList(lientes);
         lbusca = new DefaultListModel();
         jListbusca = new JList(lbusca);
 
+        btnBuscar = new JButton("Buscar");
         btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
         JPanel formulario = new JPanel();
         formulario.setBackground(Color.LIGHT_GRAY);
-        formulario.setLayout(new GridLayout(5, 2));
+        formulario.setLayout(new GridLayout(7, 2));
         formulario.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         formulario.add(lbltitulo);
         formulario.add(txttitulo);
@@ -134,7 +152,11 @@ public class estudo extends JFrame {
         ListBusca.add(lblListaBusca);
         ListBusca.add(Box.createRigidArea(new Dimension(2, 5)));
         ListBusca.add(listScrollerBusca);
+        ListBusca.add(lblBuscar);
+        ListBusca.add(txtBusca);
+        ListBusca.add(btnBuscar);
         ListBusca.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
         Container contentPane = getContentPane();
         contentPane.add(formulario, BorderLayout.NORTH);
@@ -144,6 +166,7 @@ public class estudo extends JFrame {
         EventoHandler handler = new EventoHandler();
         btnSalvar.addActionListener(handler);
         btnCancelar.addActionListener(handler);
+        btnBuscar.addActionListener(handler);
     }
 
     private class EventoHandler implements ActionListener {
@@ -158,7 +181,13 @@ public class estudo extends JFrame {
                 JOptionPane.showMessageDialog(null, "Operação cancelada.");
                 a.dispose();
 
-
+            }else if (event.getSource() == btnBuscar) {
+                String nomeBusca = txtBusca.getText().trim();
+                if (!nomeBusca.isEmpty()) {
+                    ConsultarCursoPorNome(nomeBusca);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Digite um nome para buscar.");
+                }
             }
 
         }
@@ -172,7 +201,7 @@ public class estudo extends JFrame {
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         a.setBounds(300, 300, 870, 400);
         a.setVisible(true);
-        a.setResizable(false);
+        a.setResizable(true);
 
     }
 
