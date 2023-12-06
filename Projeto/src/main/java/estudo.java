@@ -53,14 +53,21 @@ public class estudo extends JFrame {
         try {
             String titulo = txttitulo.getText().trim();
             String instrutor = txtintrutor.getText().trim();
+            String InDat = txtiniciodat.getText().trim();
+            String outDat = txtfimdat.getText().trim();
+
+            if (titulo.isEmpty() || instrutor.isEmpty() || InDat.isEmpty() || outDat.isEmpty()) {
+                throw new IllegalArgumentException("Digite todos os campos!");
+            }
 
             // Parse as datas de início e fim
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate iniciodat = LocalDate.parse(txtiniciodat.getText().trim(), formatter);
             LocalDate fimdat = LocalDate.parse(txtfimdat.getText().trim(), formatter);
 
-            if (titulo.isEmpty() || instrutor.isEmpty()) {
-                throw new IllegalArgumentException("Digite todos os campos!");
+            LocalDate dataAtual = LocalDate.now();
+            if (iniciodat.isBefore(dataAtual)) {
+                throw new IllegalArgumentException("A data de início do curso não pode ser anterior a data de hoje.!");
             }
 
             if(fimdat.isBefore(iniciodat)){
