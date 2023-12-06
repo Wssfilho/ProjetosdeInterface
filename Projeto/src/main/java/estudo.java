@@ -34,21 +34,6 @@ public class estudo extends JFrame {
     DefaultListModel lientes, lbusca;
     ArrayList<Cursos> ltscursos = new ArrayList<Cursos>();
 
-    public void ConsultarCursoPorNome(String nome) {
-        lbusca.clear();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (Cursos curso : ltscursos) {
-            if (curso.getTitulo().equalsIgnoreCase(nome)) {
-                String datinFormatada = curso.getDatin().format(formatter);
-                String datfimFormatada = curso.getDatfim().format(formatter);
-                lbusca.addElement("Titulo: " + curso.getTitulo() + ", " +
-                        "Instrutor: " + curso.getIntrutor() + ", " +
-                        "Data de início: " + datinFormatada + ", " +
-                        "Data de término: " + datfimFormatada);
-            }
-        }
-    }
-
     public void NovoCurso() {
         try {
             String titulo = txttitulo.getText().trim();
@@ -105,10 +90,34 @@ public class estudo extends JFrame {
         }
     }
 
+    public void ConsultarCursoPorNome(String nome) {
+        lbusca.clear();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if (ltscursos.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Não há cursos cadastrados.");
+            return;
+        }
+        boolean cursoEncontrado = false;
+        for (Cursos curso : ltscursos) {
+            if (curso.getTitulo().equalsIgnoreCase(nome)) {
+                cursoEncontrado = true;
+                String datinFormatada = curso.getDatin().format(formatter);
+                String datfimFormatada = curso.getDatfim().format(formatter);
+                lbusca.addElement("Titulo: " + curso.getTitulo() + ", " +
+                        "Instrutor: " + curso.getIntrutor() + ", " +
+                        "Data de início: " + datinFormatada + ", " +
+                        "Data de término: " + datfimFormatada);
+            }
+        } if (!cursoEncontrado) {
+            JOptionPane.showMessageDialog(rootPane, "Curso não encontrado.");
+        }
+    }
+
+
     estudo() {
         lblListaCursos = new JLabel("Lista de cursos");
         lbltitulo = new JLabel("Titulo do Curso");
-        lblListaBusca = new JLabel("Lista de Busca");
+        lblListaBusca = new JLabel("Lista de busca");
         txttitulo = new JTextField();
         lblinstrutor = new JLabel("Instrutor");
         txtintrutor = new JTextField();
@@ -116,7 +125,7 @@ public class estudo extends JFrame {
         txtiniciodat = new JTextField();
         lblfimdat = new JLabel("Data de fim (dd/mm/yyyy)");
         txtfimdat = new JTextField();
-        lblBuscar = new JLabel("Buscar curso");
+        lblBuscar = new JLabel("Consulta");
         txtBusca = new JTextField();
         lientes = new DefaultListModel();
         jlistodos = new JList(lientes);
@@ -208,7 +217,7 @@ public class estudo extends JFrame {
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         a.setBounds(300, 300, 870, 400);
         a.setVisible(true);
-        a.setResizable(true);
+        a.setResizable(false);
 
     }
 
