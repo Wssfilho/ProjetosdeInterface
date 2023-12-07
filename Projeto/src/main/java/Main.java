@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
+//PROJETO FEITO POR ESTHER REZENDE, VITOR SACRAMENTO & WILSON FILHO
 public class Main extends JFrame {
     JButton btnSalvar, btnCancelar,btnBuscar;
     JLabel lbltitulo, lblinstrutor, lblBuscar;
