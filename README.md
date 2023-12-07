@@ -22,7 +22,7 @@ Este projeto foi possível graças ao esforço conjunto dos seguintes colaborado
 
 - Esther Renzende  - rezendealvesesther@gmail.com
 - Vitor Sacramento - vitor.sacramento09@gmail.com
-- Wilson Filho - *****
+- Wilson Filho - wilsonsa004@gmail.com
 
 ## Contribuição
 
