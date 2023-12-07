@@ -161,13 +161,26 @@ public class Main extends JFrame {
 
         JPanel ListBusca = new JPanel();
         ListBusca.setLayout(new BoxLayout(ListBusca, BoxLayout.PAGE_AXIS));
+
+        lblListaBusca.setAlignmentX(Component.LEFT_ALIGNMENT);
         ListBusca.add(lblListaBusca);
+
         ListBusca.add(Box.createRigidArea(new Dimension(2, 5)));
+
+        listScrollerBusca.setAlignmentX(Component.LEFT_ALIGNMENT);
         ListBusca.add(listScrollerBusca);
+
+        lblBuscar.setAlignmentX(Component.LEFT_ALIGNMENT);
         ListBusca.add(lblBuscar);
+
+        txtBusca.setAlignmentX(Component.LEFT_ALIGNMENT);
         ListBusca.add(txtBusca);
+
+        btnBuscar.setAlignmentX(Component.LEFT_ALIGNMENT);
         ListBusca.add(btnBuscar);
+
         ListBusca.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
 
         Container contentPane = getContentPane();
