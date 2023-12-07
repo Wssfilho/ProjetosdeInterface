@@ -20,7 +20,7 @@ Para utilizar este projeto, clone o repositório e importe-o para a sua IDE Java
 
 Este projeto foi possível graças ao esforço conjunto dos seguintes colaboradores:
 
-- Esther Renzende  - rezendealvesesther@gmail.com
+- Esther Rezende  - rezendealvesesther@gmail.com
 - Vitor Sacramento - vitor.sacramento09@gmail.com
 - Wilson Filho - wilsonsa004@gmail.com
 
