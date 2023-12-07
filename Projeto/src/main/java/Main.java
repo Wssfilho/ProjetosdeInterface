@@ -1,7 +1,5 @@
 import java.awt.*;
 
-import static java.awt.Component.LEFT_ALIGNMENT;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,9 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.plaf.RootPaneUI;
 
-public class estudo extends JFrame {
+public class Main extends JFrame {
     JButton btnSalvar, btnCancelar,btnBuscar;
     JLabel lbltitulo, lblinstrutor, lblBuscar;
     JLabel lbliniciodat, lblfimdat, lblListaCursos, lblListaBusca;
@@ -114,7 +110,7 @@ public class estudo extends JFrame {
     }
 
 
-    estudo() {
+    Main() {
         lblListaCursos = new JLabel("Lista de cursos");
         lbltitulo = new JLabel("Titulo do Curso");
         lblListaBusca = new JLabel("Lista de busca");
@@ -212,7 +208,7 @@ public class estudo extends JFrame {
     public static JFrame a;
 
     public static void main(String[] args) {
-        a = new estudo();
+        a = new Main();
         a.setTitle("Cadastro de cursos");
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         a.setBounds(300, 300, 870, 400);
