@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-//PROJETO FEITO POR ESTHER REZENDE, VITOR SACRAMENTO & WILSON FILHO
+//PROJETO FEITO POR ESTHER REZENDE, VITOR SACRAMENTO & WILSON FILHO;
+//Programa constantemente atualizado por Wilson Filho
 public class Main extends JFrame {
     JButton btnSalvar, btnCancelar,btnBuscar;
     JLabel lbltitulo, lblinstrutor, lblBuscar;
@@ -257,21 +258,6 @@ public class Main extends JFrame {
             return titulo;
         }
 
-        public void setDatfim(LocalDate datfim) {
-            this.datfim = datfim;
-        }
-
-        public void setDatin(LocalDate datin) {
-            this.datin = datin;
-        }
-
-        public void setIntrutor(String intrutor) {
-            this.intrutor = intrutor;
-        }
-
-        public void setTitulo(String titulo) {
-            this.titulo = titulo;
-        }
     }
 }
 
